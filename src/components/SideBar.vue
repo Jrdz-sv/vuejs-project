@@ -10,9 +10,8 @@
 
             <v-list dense nav>
                 <v-list-item to="/dictionary" prepend-icon="mdi-book" title="Diccionario" value="dictionary"></v-list-item>
-                <v-list-item to="/translator" prepend-icon="mdi-translate" title="Traductor"
-                    value="translator"></v-list-item>
-                <v-list-item prepend-icon="mdi-star" title="Favoritos" value="favorites"></v-list-item>
+                <v-list-item to="/translator" prepend-icon="mdi-translate" title="Traductor" value="translator"></v-list-item>
+                <v-list-item to="/favorites" prepend-icon="mdi-heart" title="Favoritos" value="favorites"></v-list-item>
                 <v-list-item prepend-icon="mdi-account-multiple" title="Usuario" value="users"></v-list-item>
             </v-list>
             <template v-slot:append>

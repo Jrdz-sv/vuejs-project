@@ -1,35 +1,41 @@
 <template>
-      <v-app>
-        <NavBar/>
-        <SideBar/>
+    <v-app>
+        <NavBar />
+        <SideBar />
         <v-main>
-            <v-container fluid class="my-6">
-            <v-card class="elevation-2"><br>
-                <v-card-title class="font-weight-bold text-h2 mx-auto text-center">Traductor</v-card-title><br>
-                <v-card-text>
-                    <v-row>
-                        <v-col cols="12" sm="6" md="6">
-                            <v-select density="comfortable" v-model="idiomaOrigen" :items="idiomas" item-title="name"
-                                item-value="code" label="Idioma de Origen"></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="6">
-                            <v-select density="comfortable" v-model="idiomaDestino" :items="idiomas" item-title="name"
-                                item-value="code" label="Idioma de Destino"></v-select>
-                        </v-col>
-                    </v-row>
-                    <v-textarea v-model="texto" label="Ingresa el texto a traducir" clearable counter></v-textarea>
-                    <v-btn @click="translateText" color="primary" variant="elevated" rounded="lg" size="x-large"
-                        block>Traducir</v-btn>
-                </v-card-text>
-                <v-divider v-if="textoTraducido"></v-divider>
-                <div v-if="textoTraducido" class="resultado">
-                    <label class="text-h5">Traducción</label>
-                    <p class="text-body-1 resultado-text">{{ textoTraducido }}</p>
-                </div>
-            </v-card>
-        </v-container>
+            <v-container fluid class="my-1">
+                <v-card variant="tonal" class="elevation-6">
+                    <v-card-text>
+                        <v-card-title class="font-weight-bold text-h2 mx-auto text-center">Traductor</v-card-title><br>
+                        <v-row>
+                            <v-col cols="12" sm="6" md="6">
+                                <v-select density="comfortable" color="light-blue-accent-4" v-model="idiomaOrigen" :items="idiomas" item-title="name"
+                                    item-value="code" label="Idioma de Origen"></v-select>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="6">
+                                <v-select density="comfortable" color="green-accent-3" v-model="idiomaDestino" :items="idiomas" item-title="name"
+                                    item-value="code" label="Idioma de Destino"></v-select>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col cols="12" sm="6" md="6">
+                                <v-textarea variant="outlined" color="primary" v-model="texto" label="Ingresa el texto a traducir" clearable
+                                    counter></v-textarea>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="6">
+                                <v-card v-if="textoTraducido" color="light-blue-lighten-5" class="result-card" elevation="2">
+                                    <v-card-title class="result-title">Traducción</v-card-title>
+                                    <v-card-text class="result-text">{{ textoTraducido }}</v-card-text>
+                                </v-card>
+                            </v-col>
+                        </v-row>
+                        <v-btn @click="translateText" color="green-accent-4" variant="tonal" rounded="lg" size="x-large"
+                            block><v-icon>mdi-autorenew</v-icon>Traducir</v-btn>
+                    </v-card-text>
+                </v-card>
+            </v-container>
         </v-main>
-      </v-app>
+    </v-app>
 </template>
 
 <script>
@@ -38,7 +44,7 @@ import NavBar from '@/components/NavBar.vue';
 import SideBar from '@/components/SideBar.vue';
 
 export default {
-    name: 'DashBoard',
+    name: 'TranslatorView',
     components: {
         NavBar,
         SideBar,
@@ -118,17 +124,22 @@ export default {
 </script>
 
 <style scoped>
-.resultado {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #e0e0e0;
-    border-radius: 4px;
+.result-card {
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
 }
 
-.resultado-text {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 4px;
+.result-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.result-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.result-text {
+  font-size: 1rem;
+  color: black;
 }
 </style>
