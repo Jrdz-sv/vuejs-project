@@ -14,17 +14,19 @@
                             </v-col>
                             <v-col cols="12" sm="6" md="6">
                                 <v-btn @click="search" color="primary" variant="tonal" rounded="lg" size="x-large"
-                                    block><v-icon>mdi-magnify</v-icon>Buscar</v-btn>
+                                    block><v-icon>mdi-magnify</v-icon>Buscar
+                                </v-btn>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" sm="6" md="6">
-                                <v-select color="green-accent-3" v-model="searchType" :items="formattedSearchTypes" label="Selecciona tu opcion"
-                                    outlined density="comfortable"></v-select>
+                                <v-select color="green-accent-3" v-model="searchType" :items="formattedSearchTypes"
+                                    label="Selecciona tu opcion" outlined density="comfortable"></v-select>
                             </v-col>
                             <v-col cols="12" sm="6" md="6">
-                                <v-btn @click="search" color="light-green-accent-4" variant="tonal" rounded="lg"
-                                    size="x-large" block><v-icon>mdi-heart</v-icon>Favoritos</v-btn>
+                                <v-btn @click="addFav" color="light-green-accent-4" variant="tonal" rounded="lg"
+                                    size="x-large" block><v-icon>mdi-heart</v-icon>Favoritos
+                                </v-btn>
                             </v-col>
                         </v-row>
                     </v-card-text>
@@ -89,6 +91,8 @@
 import axios from 'axios';
 import NavBar from '@/components/NavBar.vue';
 import SideBar from '@/components/SideBar.vue';
+import { ref, onMounted } from 'vue';
+import { getAuth } from 'firebase/auth';
 
 export default {
     name: 'DictionaryView',
@@ -103,6 +107,18 @@ export default {
             searchType: '',
             searchTypes: ['definicion', 'sinonimos', 'antonimos'],
         };
+    },
+    setup() {
+        const auth = getAuth();
+        const user = ref(auth.currentUser);
+
+        onMounted(() => {
+            auth.onAuthStateChanged((newUser) => {
+                user.value = newUser;
+            });
+        });
+
+        return { user };
     },
     computed: {
         formattedSearchTypes() {
@@ -129,6 +145,23 @@ export default {
                 return results[type]?.join(', ') || '';
             }
             return '';
+        },
+        async addFav() {
+            if (this.results && this.results.word && this.results.definition && this.user.value) {
+                try {
+                    const response = await axios.post('http://127.0.0.1:5000/addFavorite', {
+                        userId: this.user.value.uid,
+                        word: this.results.word,
+                        definition: this.results.definition,
+                        // Add other properties as needed
+                    });
+                    console.log('Favorite added successfully:', response.data);
+                } catch (error) {
+                    console.error('Error adding favorite:', error);
+                }
+            } else {
+                console.log('No word selected or user not logged in');
+            }
         },
     },
 };
