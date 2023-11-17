@@ -147,21 +147,7 @@ export default {
             return '';
         },
         async addFav() {
-            if (this.results && this.results.word && this.results.definition && this.user.value) {
-                try {
-                    const response = await axios.post('http://127.0.0.1:5000/addFavorite', {
-                        userId: this.user.value.uid,
-                        word: this.results.word,
-                        definition: this.results.definition,
-                        // Add other properties as needed
-                    });
-                    console.log('Favorite added successfully:', response.data);
-                } catch (error) {
-                    console.error('Error adding favorite:', error);
-                }
-            } else {
-                console.log('No word selected or user not logged in');
-            }
+
         },
     },
 };
