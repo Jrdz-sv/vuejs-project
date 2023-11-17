@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { toast } from 'vue3-toastify'; // Import the toast library
+import 'vue3-toastify/dist/index.css'; // Import the toast styles
 
 import LoginView from '../views/LoginView.vue';
 import RegisterView from '../views/RegisterView.vue';
@@ -62,7 +64,7 @@ const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      unsubscribe(); // Unsubscribe after getting the user
+      unsubscribe();
       resolve(user);
     }, reject);
   });
@@ -74,12 +76,22 @@ router.beforeEach(async (to, from, next) => {
     if (user) {
       next();
     } else {
-      alert('Please login');
-      next('/');
+      // Show the toast
+      toast.error('Por favor, inicie sesión', {
+        autoClose: 3000,
+        theme: 'colored',
+        position:'top-center'
+      });
+
+      // Delay the redirection after the toast is shown
+      setTimeout(() => {
+        router.replace('/');
+      }, 3000);
     }
   } else {
     next();
   }
 });
+
 
 export default router;
