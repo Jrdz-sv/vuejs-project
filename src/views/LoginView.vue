@@ -53,7 +53,8 @@ export default {
                 const auth = getAuth();
 
                 // Sign in user with email and password
-                await signInWithEmailAndPassword(auth, this.username, this.password);
+                let user = await signInWithEmailAndPassword(auth, this.username, this.password);
+                this.$store.dispatch('actionSetUser', user);
 
                 // Redirect or perform other actions after successful login
                 this.$router.push('/dictionary');

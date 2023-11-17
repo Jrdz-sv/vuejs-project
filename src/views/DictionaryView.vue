@@ -135,6 +135,7 @@ export default {
             try {
                 const response = await axios.get(`http://4.157.91.179:5000/${this.searchType.toLowerCase()}/${this.searchTerm}`);
                 this.results = response.data;
+                console.log(this.results._id);
             } catch (error) {
                 console.log(error);
                 this.results = null;
@@ -147,21 +148,29 @@ export default {
             return '';
         },
         async addFav() {
-            if (this.results && this.results.word && this.results.definition && this.user.value) {
+
+            let user = this.$store.getters.getUser;
+            let userId = user.user.uid;
+
+
+            // if (this.results && this.results.word && this.results.definition && this.user.value) {
                 try {
-                    const response = await axios.post('http://127.0.0.1:5000/addFavorite', {
-                        userId: this.user.value.uid,
+                    // MISSING  ID_DICCIONARY
+                    let idDiccionary = null;
+                    const response = await axios.post('https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/addFavorite', {
+                        userId: userId,
                         word: this.results.word,
                         definition: this.results.definition,
+                        idDiccionary: idDiccionary
                         // Add other properties as needed
                     });
                     console.log('Favorite added successfully:', response.data);
                 } catch (error) {
                     console.error('Error adding favorite:', error);
                 }
-            } else {
+            // } else {
                 console.log('No word selected or user not logged in');
-            }
+            // }
         },
     },
 };
