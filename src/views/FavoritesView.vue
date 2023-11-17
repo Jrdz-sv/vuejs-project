@@ -29,24 +29,32 @@
 
 
                 <!-- Component to view Fav -->
-
-                <!-- Component to confirm deletion -->
-                <!-- Diálogo de confirmación -->
-                <v-dialog v-model="dialogo" max-width="500px">
+                <v-dialog v-model="showState" max-width="600px">
                 <v-card>
-                    <v-card-title class="headline">¿Estás seguro?</v-card-title>
+                    <v-card-title>Detalles</v-card-title>
                     <v-card-text>
-                    Esta acción eliminará permanentemente el registro. ¿Deseas continuar?
+                    <v-row>
+                        <v-col>
+                        <div>Palabra: {{ word }}</div>
+                        </v-col>
+                        <v-col>
+                        <div>Significado: {{ meaning }}</div>
+                        </v-col>
+                    </v-row>
                     </v-card-text>
                     <v-card-actions>
-                    <!-- Botón para confirmar la eliminación -->
-                    <v-btn color="error" @click="eliminarRegistro">Eliminar</v-btn>
-                    <!-- Botón para cerrar el diálogo sin eliminar el registro -->
-                    <v-btn @click="cerrarDialogo">Cancelar</v-btn>
+                    <v-btn @click="closeShowState">Cerrar</v-btn>
                     </v-card-actions>
                 </v-card>
                 </v-dialog>
 
+                <!-- Component to confirm deletion -->
+                <v-snackbar
+                    v-model="deleteState"
+                    :timeout="1500"  
+                    {{ deleteMessage }}
+                    >
+                </v-snackbar>
 
             </v-container>
         </v-main>
@@ -68,7 +76,13 @@ export default {
     data() {
         return {
             favoriteWords: ['awesome', 'fantastic', 'amazing', 'incredible'], 
-            dialogo: false
+            favorites: {},
+            deleteState: false, 
+            deleteMessage: null, 
+            showState: false, 
+            word: null, 
+            meaning: null,
+
         }
     }, 
 
@@ -81,7 +95,9 @@ export default {
              try{
                 axios.get(`https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/allUserFavorites/${userId}`)
                     .then(response => {
-                        console.log(response)
+                        let res = response.data;
+                        console.log(response); 
+                        this.favorites = res.data;
                     })
                     .catch(error => {
                         console.log(error);
@@ -92,6 +108,8 @@ export default {
         }, 
         showFav(){
             console.log("Clicked item");
+            // Desglosar favs
+            
         }, 
         deleteFav(){
             try{
@@ -101,10 +119,20 @@ export default {
                 let idDiccionary = null;
 
                 axios.delete(`https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/deleteUserFavoritesByIdDiccionary/${userId}/${idDiccionary}`)
+                .then(response => {
+                    let res = response.data;
+                    this.deleteState = true; 
+                    this.deleteMessage = res.data;
+                })
+                .catch(error => console.log(error));
+
             }catch(e){
                 console.log(e)
             }
             console.log("Deleted!");
+        }, 
+        closeShowState(){
+            this.showState = false;
         }
     }, 
     mounted(){

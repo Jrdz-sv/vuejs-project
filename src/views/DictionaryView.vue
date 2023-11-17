@@ -135,6 +135,7 @@ export default {
             try {
                 const response = await axios.get(`http://4.157.91.179:5000/${this.searchType.toLowerCase()}/${this.searchTerm}`);
                 this.results = response.data;
+                // CHANGE THIS
                 console.log(this.results._id);
             } catch (error) {
                 console.log(error);
