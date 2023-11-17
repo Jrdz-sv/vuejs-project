@@ -141,7 +141,7 @@ export default {
                 console.log(error);
                 this.results = null;
             }
-        },
+        }, 
         getResultText(results, type) {
             if (results) {
                 return results[type]?.join(', ') || '';
