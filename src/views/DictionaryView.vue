@@ -135,10 +135,9 @@ export default {
             try {
                 const response = await axios.get(`https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/${this.searchType.toLowerCase()}/${this.searchTerm}`);
                 this.results = response.data;
-                // CHANGE THIS
-                console.log(this.results._id);
+                // console.log(this.results);
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 this.results = null;
             }
         }, 
@@ -153,25 +152,16 @@ export default {
             let user = this.$store.getters.getUser;
             let userId = user.user.uid;
 
-
-            // if (this.results && this.results.word && this.results.definition && this.user.value) {
-                try {
-                    // MISSING  ID_DICCIONARY
-                    let idDiccionary = null;
-                    const response = await axios.post('https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/addFavorite', {
-                        userId: userId,
-                        word: this.results.word,
-                        definition: this.results.definition,
-                        idDiccionary: idDiccionary
-                        // Add other properties as needed
-                    });
-                    console.log('Favorite added successfully:', response.data);
-                } catch (error) {
-                    console.error('Error adding favorite:', error);
-                }
-            // } else {
-                console.log('No word selected or user not logged in');
-            // }
+            try {
+                let idDiccionary = this.results._id;
+                const response = await axios.post('https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/addFavorite', {
+                    uid: userId,
+                    idDiccionary: idDiccionary
+                });
+                console.log('Favorite added successfully:', response.data);
+            } catch (error) {
+                console.error('Error adding favorite:', error);
+            }
         },
     },
 };

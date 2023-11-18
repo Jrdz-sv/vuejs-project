@@ -8,11 +8,11 @@
                     <v-card-title>My Favorite Words</v-card-title>
                     <v-card-text>
                         <v-list>
-                            <v-list-item v-for="(word, i) in favoriteWords" :key="i" @click="showFav">
+                            <v-list-item v-for="(fav, i) in favsWords" :key="i" @click="showFav" >
                                 <v-list-item-content>
                                     <v-row align="center">
                                     <v-col cols="10">
-                                        <v-list-item-title>{{ word }}</v-list-item-title>
+                                        <v-list-item-title>{{ fav.favoritos.word }}</v-list-item-title>
                                     </v-col>
                                     <v-col cols="1">
                                         <v-icon @click="getFavorites" class="success--text">mdi-eye</v-icon>
@@ -26,7 +26,6 @@
                         </v-list>
                     </v-card-text>
                 </v-card>
-
 
                 <!-- Component to view Fav -->
                 <v-dialog v-model="showState" max-width="600px">
@@ -49,12 +48,7 @@
                 </v-dialog>
 
                 <!-- Component to confirm deletion -->
-                <v-snackbar
-                    v-model="deleteState"
-                    :timeout="1500"  
-                    {{ deleteMessage }}
-                    >
-                </v-snackbar>
+                <v-snackbar v-model="deleteState" :timeout="1500" :v-if="deleteMessage">{{ deleteMessage }}</v-snackbar>
 
             </v-container>
         </v-main>
@@ -75,8 +69,10 @@ export default {
     },
     data() {
         return {
-            favoriteWords: ['awesome', 'fantastic', 'amazing', 'incredible'], 
             favorites: {},
+            favsWords: {},
+            favsIds: [],
+            frecuencias: {},
             deleteState: false, 
             deleteMessage: null, 
             showState: false, 
@@ -88,16 +84,38 @@ export default {
 
     //Changes
     methods: {
-        async getFavorites(){
+        getFavorites(){
             let user = this.$store.getters.getUser;
             let userId = user.user.uid;
+            this.favsWords = {};
+            this.favsIds = [];
 
              try{
                 axios.get(`https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/allUserFavorites/${userId}`)
                     .then(response => {
                         let res = response.data;
-                        console.log(response); 
-                        this.favorites = res.data;
+                        this.favorites = res;
+
+                        for(let i = 0; i < this.favorites.length; i++){
+                            
+                            this.favsIds.push(this.favorites[i].favoritos._id.$oid); 
+
+                            if(!this.favsWords[this.favorites[i].favoritos._id.$oid]){
+                                this.favsWords[this.favorites[i].favoritos._id.$oid] = this.favorites[i]
+                            }
+                           
+                        }
+
+                        // for(let j = 0; j < this.favsIds.length; j++){
+                        //     if(this.frecuencias[this.favsIds[j]]){
+                        //         this.frecuencias[this.favsIds[j]] = this.frecuencias[this.favsIds[j]] + 1;
+                                
+                        //     }else{
+                        //         this.frecuencias[this.favsIds[j]] = 1; 
+                        //     }
+                        // }
+
+                        // console.log(this.favsWords);
                     })
                     .catch(error => {
                         console.log(error);
@@ -111,12 +129,11 @@ export default {
             // Desglosar favs
             
         }, 
-        deleteFav(){
+        deleteFav(id){
             try{
                 let user = this.$store.getters.getUser;
                 let userId = user.user.uid;
-                // MISSING  ID_DICCIONARY
-                let idDiccionary = null;
+                let idDiccionary = id;
 
                 axios.delete(`https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/deleteUserFavoritesByIdDiccionary/${userId}/${idDiccionary}`)
                 .then(response => {
@@ -125,6 +142,11 @@ export default {
                     this.deleteMessage = res.data;
                 })
                 .catch(error => console.log(error));
+
+
+                this.getFavorites(); 
+
+                
 
             }catch(e){
                 console.log(e)
@@ -136,7 +158,7 @@ export default {
         }
     }, 
     mounted(){
-        this.getFavorites;
+        this.getFavorites();
     }
 }
 </script>
