@@ -42,6 +42,8 @@
 import axios from 'axios';
 import NavBar from '@/components/NavBar.vue';
 import SideBar from '@/components/SideBar.vue';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
     name: 'TranslatorView',
@@ -114,10 +116,20 @@ export default {
                 } catch (error) {
                     console.log(error);
                 }
+            }else{
+                this.showToastError();
             }
         },
         resetTranslatedText() {
             this.textoTraducido = '';
+        },
+        showToastError() {
+            toast.error('¡Campos vacios!', {
+                autoClose: 3500,
+                theme: 'colored',
+                position: 'top-right',
+                transition: 'bounce',
+            });
         },
     },
 };
