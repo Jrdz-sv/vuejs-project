@@ -133,14 +133,13 @@ export default {
     methods: {
         async search() {
             try {
-                const response = await axios.get(`https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/${this.searchType.toLowerCase()}/${this.searchTerm}`);
+                const response = await axios.get(`http://4.157.91.179:5000/${this.searchType.toLowerCase()}/${this.searchTerm}`);
                 this.results = response.data;
-                // console.log(this.results);
             } catch (error) {
-                // console.log(error);
+                console.log(error);
                 this.results = null;
             }
-        }, 
+        },
         getResultText(results, type) {
             if (results) {
                 return results[type]?.join(', ') || '';
@@ -149,19 +148,6 @@ export default {
         },
         async addFav() {
 
-            let user = this.$store.getters.getUser;
-            let userId = user.user.uid;
-
-            try {
-                let idDiccionary = this.results._id;
-                const response = await axios.post('https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/addFavorite', {
-                    uid: userId,
-                    idDiccionary: idDiccionary
-                });
-                console.log('Favorite added successfully:', response.data);
-            } catch (error) {
-                console.error('Error adding favorite:', error);
-            }
         },
     },
 };
