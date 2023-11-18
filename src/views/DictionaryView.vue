@@ -78,7 +78,7 @@
                                         <v-list-item-content>
                                             <v-list-item-goup>
                                                 <v-alert type="warning">
-                                                Palabra no existente
+                                                    Palabra no existente
                                                 </v-alert>
                                             </v-list-item-goup>
                                         </v-list-item-content>
@@ -156,7 +156,25 @@ export default {
             return '';
         },
         async addFav() {
+            // Verifica si this.$store.getters.getUser no es nulo antes de acceder a la propiedad 'user'
+            let user = this.$store.getters.getUser;
 
+            if (user && user.user) {
+                let userId = user.user.uid;
+
+                try {
+                    let idDiccionary = this.results._id;
+                    const response = await axios.post('https://conteinaerappsdiccionary.calmmoss-65dacf7d.eastus.azurecontainerapps.io/addFavorite', {
+                        uid: userId,
+                        idDiccionary: idDiccionary
+                    });
+                    console.log(this.showToastSuccess(), response.data);
+                } catch (error) {
+                    console.error('Error adding favorite:', error);
+                }
+            } else {
+                console.error('User is null or user.user is null');
+            }
         },
         showToastError() {
             toast.error('¡Campos vacios!', {
@@ -166,6 +184,20 @@ export default {
                 transition: 'bounce',
             });
         },
+        showToastSuccess() {
+            toast.success('Agregado a favoritos', {
+                autoClose: 3500,
+                theme: 'colored',
+                position: 'top-center',
+                transition: 'bounce',
+            });
+        },
+        mounted() {
+            // Llama a getFavorites solo si this.$store.getters.getUser no es nulo
+            if (this.$store.getters.getUser) {
+                this.getFavorites();
+            }
+        }
     },
 };
 </script>
