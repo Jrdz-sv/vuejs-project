@@ -77,7 +77,7 @@ router.beforeEach(async (to, from, next) => {
       next();
     } else {
       // Show the toast
-      toast.error('Por favor, inicie sesión', {
+      toast.error('¡Por favor, inicie sesión!', {
         autoClose: 3000,
         theme: 'colored',
         position:'top-center'
