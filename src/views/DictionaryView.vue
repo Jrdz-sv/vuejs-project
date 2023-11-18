@@ -71,10 +71,16 @@
                                         </v-list-item-content>
                                     </v-list-item>
                                 </v-list>
-                                <v-list v-else>
+                            </v-col>
+                            <v-col v-if="results">
+                                <v-list v-if="!results || (!results.examples && !results.sinonimos && !results.antonimos)">
                                     <v-list-item>
                                         <v-list-item-content>
-                                            <p class="text-center">La palabra no fue encontrada.</p>
+                                            <v-list-item-goup>
+                                                <v-alert type="warning">
+                                                Palabra no existente
+                                                </v-alert>
+                                            </v-list-item-goup>
                                         </v-list-item-content>
                                     </v-list-item>
                                 </v-list>
@@ -93,6 +99,8 @@ import NavBar from '@/components/NavBar.vue';
 import SideBar from '@/components/SideBar.vue';
 import { ref, onMounted } from 'vue';
 import { getAuth } from 'firebase/auth';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
 export default {
     name: 'DictionaryView',
@@ -138,6 +146,7 @@ export default {
             } catch (error) {
                 console.log(error);
                 this.results = null;
+                this.showToastError();
             }
         },
         getResultText(results, type) {
@@ -148,6 +157,14 @@ export default {
         },
         async addFav() {
 
+        },
+        showToastError() {
+            toast.error('¡Campos vacios!', {
+                autoClose: 3500,
+                theme: 'colored',
+                position: 'top-right',
+                transition: 'bounce',
+            });
         },
     },
 };
