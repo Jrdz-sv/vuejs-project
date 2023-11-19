@@ -2,7 +2,7 @@
     <!-- Menú lateral -->
     <v-navigation-drawer class="bg-light-blue-accent-1" theme="dark" permanent expand-on-hover rail>
         <v-list>
-            <v-list-item class="user" prepend-icon="mdi-badge-account" title="User" start>
+            <v-list-item class="user" prepend-icon="mdi-badge-account" title="Menú" start>
             </v-list-item>
         </v-list>
 

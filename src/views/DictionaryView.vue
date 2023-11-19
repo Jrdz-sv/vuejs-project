@@ -21,7 +21,7 @@
                         <v-row>
                             <v-col cols="12" sm="6" md="6">
                                 <v-select color="green-accent-3" v-model="searchType" :items="formattedSearchTypes"
-                                    label="Selecciona tu opcion" outlined density="comfortable"></v-select>
+                                    label="Selecciona tu opción" outlined density="comfortable"></v-select>
                             </v-col>
                             <v-col cols="12" sm="6" md="6">
                                 <v-btn @click="addFav" color="light-green-accent-4" variant="tonal" rounded="lg"

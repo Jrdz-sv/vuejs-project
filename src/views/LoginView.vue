@@ -17,7 +17,7 @@
                     <v-card-actions>
                         <v-btn variant="tonal" color="primary" elevation="8" @click="handleLogin" rounded="lg"
                             size="x-large" block>
-                            Iniciar Sesion
+                            Iniciar sesión
                         </v-btn>
                     </v-card-actions>
                     <v-card-actions>

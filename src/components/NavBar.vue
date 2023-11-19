@@ -5,7 +5,7 @@
         <v-img src="../assets/book.png" max-height="70" contain></v-img>
       </v-icon>
     </v-btn>
-    <v-toolbar-title class="font-weight-bold text-h5" style="color: black;">ProyectoFinal</v-toolbar-title>
+    <v-toolbar-title class="font-weight-bold text-h5" style="color: black;">Dictionify</v-toolbar-title>
     <div class="ml-auto">
       <v-btn @click="handleSignOut" v-if="isLoggedIn" color="red" variant="elevated" rounded="lg" size="large" block text
         class="mr-2">

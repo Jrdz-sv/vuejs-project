@@ -82,7 +82,23 @@ export default {
                 {
                     name: "Ruso",
                     code: "ru"
-                }
+                },
+                {
+                    name: "Japonés",
+                    code: "ja"
+                },
+                {
+                    name: "Coreano",
+                    code: "ko"
+                },
+                {
+                    name: "Árabe",
+                    code: "ar"
+                },
+                {
+                    name: "Hindi",
+                    code: "hi"
+                },
             ],
             apiKey: '076cc5abebmsh72f5acdadfaa2f8p1683f0jsn25cc92355561',
         };
