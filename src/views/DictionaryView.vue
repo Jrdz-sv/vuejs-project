@@ -113,7 +113,7 @@ export default {
             searchTerm: '',
             results: null,
             searchType: '',
-            searchTypes: ['definición', 'sinónimos', 'antónimos'],
+            searchTypes: ['definicion', 'sinonimos', 'antonimos'],
         };
     },
     setup() {
@@ -146,7 +146,6 @@ export default {
             } catch (error) {
                 console.log(error);
                 this.results = null;
-                this.showToastError();
             }
         },
         getResultText(results, type) {
