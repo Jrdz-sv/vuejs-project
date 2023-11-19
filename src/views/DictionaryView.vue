@@ -140,12 +140,18 @@ export default {
     },
     methods: {
         async search() {
+            if (this.searchTerm.trim() === '') {
+                this.showToastError('¡Campos vacíos!');
+                return;
+            }
+
             try {
                 const response = await axios.get(`http://4.157.91.179:5000/${this.searchType.toLowerCase()}/${this.searchTerm}`);
                 this.results = response.data;
             } catch (error) {
                 console.log(error);
                 this.results = null;
+                this.showToastError('Error en la búsqueda');
             }
         },
         getResultText(results, type) {
