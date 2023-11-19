@@ -5,7 +5,7 @@
                 <v-card variant="tonal" class="elevation-12">
                     <v-card-title class="font-weight-bold text-h3 mx-auto text-center">Crear cuenta</v-card-title>
                     <v-card-text>
-                        <v-img src="../assets/logo.png" max-height="120" class="mx-auto mt-2"></v-img>
+                        <v-img src="../assets/book.png" max-height="120" class="mx-auto mt-2"></v-img>
                         <v-form @submit.prevent="submitForm">
                             <v-text-field clearable variant="outlined" color="primary" v-model="email" label="Email"
                                 type="email" prepend-icon="mdi-email" required></v-text-field>

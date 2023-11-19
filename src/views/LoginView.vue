@@ -6,7 +6,7 @@
                     <br>
                     <v-card-title class="font-weight-bold text-h3 mx-auto text-center">Iniciar sesión</v-card-title>
                     <v-card-text>
-                        <v-img src="../assets/logo.png" max-height="120" class="mx-auto mt-2"></v-img>
+                        <v-img src="../assets/book.png" max-height="120" class="mx-auto mt-2"></v-img>
                         <v-form @submit.prevent="login">
                             <v-text-field clearable variant="outlined" color="primary" v-model="username" label="Usuario"
                                 required prepend-icon="mdi-account"></v-text-field>

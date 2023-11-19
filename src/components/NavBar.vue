@@ -1,8 +1,16 @@
 <template>
-  <v-app-bar app color="indigo-darken-4" dark clipped-left class="elevation-0">
-    <v-toolbar-title class="font-weight-bold text-h5">Proyecto Final</v-toolbar-title>
+  <v-app-bar app color="light-blue-lighten-3" dark clipped-left class="elevation-0">
+    <v-btn icon>
+      <v-icon>
+        <v-img src="../assets/book.png" max-height="70" contain></v-img>
+      </v-icon>
+    </v-btn>
+    <v-toolbar-title class="font-weight-bold text-h5" style="color: black;">ProyectoFinal</v-toolbar-title>
     <div class="ml-auto">
-      <v-btn @click="handleSignOut" v-if="isLoggedIn" text class="mr-2"><v-icon>mdi-logout</v-icon> Cerrar Sesión</v-btn>
+      <v-btn @click="handleSignOut" v-if="isLoggedIn" color="red" variant="elevated" rounded="lg" size="large" block text
+        class="mr-2">
+        <v-icon>mdi-logout</v-icon> Cerrar Sesión
+      </v-btn>
     </div>
   </v-app-bar>
 </template>
