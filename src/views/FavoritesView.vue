@@ -78,7 +78,6 @@ export default {
             showState: false, 
             word: null, 
             meaning: null,
-
         }
     }, 
 
@@ -105,17 +104,6 @@ export default {
                             }
                            
                         }
-
-                        // for(let j = 0; j < this.favsIds.length; j++){
-                        //     if(this.frecuencias[this.favsIds[j]]){
-                        //         this.frecuencias[this.favsIds[j]] = this.frecuencias[this.favsIds[j]] + 1;
-                                
-                        //     }else{
-                        //         this.frecuencias[this.favsIds[j]] = 1; 
-                        //     }
-                        // }
-
-                        // console.log(this.favsWords);
                     })
                     .catch(error => {
                         console.log(error);
