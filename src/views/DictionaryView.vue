@@ -10,7 +10,7 @@
                         <v-row>
                             <v-col cols="12" sm="6" md="6">
                                 <v-text-field clearable variant="outlined" color="primary" v-model="searchTerm"
-                                    label="Busqueda" outlined placeholder="Busca tu palabra" required></v-text-field>
+                                    label="Búsqueda" outlined placeholder="Busca tu palabra" required></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6" md="6">
                                 <v-btn @click="search" color="primary" variant="tonal" rounded="lg" size="x-large"
@@ -113,7 +113,7 @@ export default {
             searchTerm: '',
             results: null,
             searchType: '',
-            searchTypes: ['definicion', 'sinonimos', 'antonimos'],
+            searchTypes: ['definición', 'sinónimos', 'antónimos'],
         };
     },
     setup() {

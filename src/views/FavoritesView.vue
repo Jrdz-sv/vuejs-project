@@ -78,6 +78,8 @@ export default {
             meaning: null,
         };
     },
+        }
+    }, 
 
     methods: {
         async getFavorites() {
